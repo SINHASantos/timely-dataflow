@@ -4,37 +4,24 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Monitoring Probes</title>
-        
-        
 
 
         <!-- Custom HTML head -->
         
-
-
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
-        
         <link rel="stylesheet" href="../css/print.css" media="print">
-        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -42,19 +29,18 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
 
-        
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -70,7 +56,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -82,7 +68,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -103,8 +89,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -114,35 +99,30 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
-                        
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -150,10 +130,9 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -163,7 +142,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#monitoring-probes" id="monitoring-probes">Monitoring Probes</a></h1>
+                        <h1 id="monitoring-probes"><a class="header" href="#monitoring-probes">Monitoring Probes</a></h1>
 <p>On the flip side of inputs we have probes. Probes aren't <em>outputs</em> per se, but rather ways for you to monitor progress. They report on the possible timestamps remaining at certain places in the dataflow graph (wherever you attach them).</p>
 <p>The easiest way to create a <code>ProbeHandle</code> is by calling <code>.probe()</code> on a stream. This attaches a probe to a point in the dataflow, and when you inspect the probe (in just a moment) you'll learn about what might happen at that point.</p>
 <p>You can also create a <code>ProbeHandle</code> directly with <code>ProbeHandle::new()</code>. Such a probe handle is not very interesting yet, but you can attach a probe handle by calling <code>.probe_with(&amp;mut handle)</code> on a stream. This has the cute benefit that you can attach one probe to multiple parts of the dataflow graph, and it will report on the union of their times. If you would like to watch multiple outputs, you could call <code>.probe()</code> multiple times, or attach one common handle to each with multiple calls to <code>.probe_with()</code>. Both are reasonable, depending on whether you need to distinguish between the multiple locations.</p>
@@ -176,8 +155,7 @@
 </ol>
 <p>Probe handles also have a <code>with_frontier</code> method that allows you to provide a closure that can observe the frontier and return arbitrary results. This is a bit of a song and dance, because the frontier is shared mutable state and cannot be trivially handed back up to your code without peril (you would gain a <code>RefMut</code> that may cause the system to panic if you do not drop before calling <code>worker.step()</code>).</p>
 <p>The most common thing to do with a probe handle is to check whether we are &quot;caught up&quot; to the input times. The following is a very safe idiom for doing this:</p>
-<pre><code class="language-rust ignore">probe.less_than(input.time())
-</code></pre>
+<pre><code class="language-rust ignore">probe.less_than(input.time())</code></pre>
 <p>This checks if there are any times strictly less than what the input is positioned to provide next. If so, it means we could keep doing work and making progress, because we know that the system <em>could</em> catch up to <code>input.time()</code> as we can't produce anything less than this from <code>input</code>.</p>
 <p>However, you are free to use whatever logic you like. Perhaps you just want to check this test a few times, rather than iterating for as long as it is true (which we commonly do). This would give the dataflow a chance to catch up, but it would start work on the next batch of data anyhow, to keep things moving along. There is a trade-off between overloading the system (if you provide data faster than you can retire it) and underloading it by constantly waiting rather than working.</p>
 
@@ -185,17 +163,13 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../chapter_3/chapter_3_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../chapter_3/chapter_3_3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -203,49 +177,36 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../chapter_3/chapter_3_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../chapter_3/chapter_3_3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
+    </div>
     </body>
 </html>
