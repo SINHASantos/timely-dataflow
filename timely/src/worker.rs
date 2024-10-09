@@ -195,7 +195,7 @@ pub trait AsWorker : Scheduler {
     /// Constructs a pipeline channel from the worker to itself.
     ///
     /// By default this method uses the native channel allocation mechanism, but the expectation is
-    /// that this behavior will be overriden to be more efficient.
+    /// that this behavior will be overridden to be more efficient.
     fn pipeline<T: 'static>(&mut self, identifier: usize, address: Rc<[usize]>) -> (ThreadPusher<Message<T>>, ThreadPuller<Message<T>>);
 
     /// Allocates a new worker-unique identifier.
@@ -412,7 +412,7 @@ impl<A: Allocate> Worker<A> {
         !self.dataflows.borrow().is_empty()
     }
 
-    /// Calls `self.step()` as long as `func` evaluates to true.
+    /// Calls `self.step()` as long as `func` evaluates to `true`.
     ///
     /// This method will continually execute even if there is not work
     /// for the worker to perform. Consider using the similar method
@@ -441,7 +441,7 @@ impl<A: Allocate> Worker<A> {
         self.step_or_park_while(Some(Duration::from_secs(0)), func)
     }
 
-    /// Calls `self.step_or_park(duration)` as long as `func` evaluates to true.
+    /// Calls `self.step_or_park(duration)` as long as `func` evaluates to `true`.
     ///
     /// This method may yield whenever there is no work to perform, as performed
     /// by `Self::step_or_park()`. Please consult the documentation for further
@@ -699,7 +699,7 @@ impl<A: Allocate> Worker<A> {
         self.dataflows.borrow().keys().cloned().collect()
     }
 
-    /// True if there is at least one dataflow under management.
+    /// Returns `true` if there is at least one dataflow under management.
     pub fn has_dataflows(&self) -> bool {
         !self.dataflows.borrow().is_empty()
     }

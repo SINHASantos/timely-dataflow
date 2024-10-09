@@ -1,5 +1,6 @@
 //! Tracks minimal sets of mutually incomparable elements of a partial order.
 
+use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
 
 use crate::progress::ChangeBatch;
@@ -23,7 +24,7 @@ pub struct Antichain<T> {
 impl<T: PartialOrder> Antichain<T> {
     /// Updates the `Antichain` if the element is not greater than or equal to some present element.
     ///
-    /// Returns true if element is added to the set
+    /// Returns `true` if element is added to the set
     ///
     /// # Examples
     ///
@@ -47,7 +48,7 @@ impl<T: PartialOrder> Antichain<T> {
 
     /// Updates the `Antichain` if the element is not greater than or equal to some present element.
     ///
-    /// Returns true if element is added to the set
+    /// Returns `true` if element is added to the set
     ///
     /// Accepts a reference to an element, which is cloned when inserting.
     ///
@@ -75,7 +76,7 @@ impl<T: PartialOrder> Antichain<T> {
     /// If the antichain needs updating, it uses the `to_owned` closure to convert the element into
     /// a `T`.
     ///
-    /// Returns true if element is added to the set
+    /// Returns `true` if element is added to the set
     ///
     /// # Examples
     ///
@@ -102,7 +103,7 @@ impl<T: PartialOrder> Antichain<T> {
         self.elements.reserve(additional);
     }
 
-    /// Performs a sequence of insertion and return true iff any insertion does.
+    /// Performs a sequence of insertion and returns `true` iff any insertion does.
     ///
     /// # Examples
     ///
@@ -122,7 +123,7 @@ impl<T: PartialOrder> Antichain<T> {
         added
     }
 
-    /// Returns true if any item in the antichain is strictly less than the argument.
+    /// Returns `true` if any item in the antichain is strictly less than the argument.
     ///
     /// # Examples
     ///
@@ -142,7 +143,7 @@ impl<T: PartialOrder> Antichain<T> {
         self.elements.iter().any(|x| x.less_than(time))
     }
 
-    /// Returns true if any item in the antichain is less than or equal to the argument.
+    /// Returns `true` if any item in the antichain is less than or equal to the argument.
     ///
     /// # Examples
     ///
@@ -162,7 +163,7 @@ impl<T: PartialOrder> Antichain<T> {
         self.elements.iter().any(|x| x.less_equal(time))
     }
 
-    /// Returns true if every element of `other` is greater or equal to some element of `self`.
+    /// Returns `true` if every element of `other` is greater or equal to some element of `self`.
     #[deprecated(since="0.12.0", note="please use `PartialOrder::less_equal` instead")]
     #[inline]
     pub fn dominates(&self, other: &Antichain<T>) -> bool {
@@ -454,7 +455,7 @@ impl<T> MutableAntichain<T> {
         }
     }
 
-    /// Returns true if there are no elements in the `MutableAntichain`.
+    /// Returns `true` if there are no elements in the `MutableAntichain`.
     ///
     /// # Examples
     ///
@@ -469,7 +470,7 @@ impl<T> MutableAntichain<T> {
         self.frontier.is_empty()
     }
 
-    /// Returns true if any item in the `MutableAntichain` is strictly less than the argument.
+    /// Returns `true` if any item in the `MutableAntichain` is strictly less than the argument.
     ///
     /// # Examples
     ///
@@ -489,7 +490,7 @@ impl<T> MutableAntichain<T> {
         self.frontier().less_than(time)
     }
 
-    /// Returns true if any item in the `MutableAntichain` is less than or equal to the argument.
+    /// Returns `true` if any item in the `MutableAntichain` is less than or equal to the argument.
     ///
     /// # Examples
     ///
@@ -713,7 +714,7 @@ impl<'a, T: 'a> AntichainRef<'a, T> {
 
 impl<T> AntichainRef<'_, T> {
 
-    /// Returns true if any item in the `AntichainRef` is strictly less than the argument.
+    /// Returns `true` if any item in the `AntichainRef` is strictly less than the argument.
     ///
     /// # Examples
     ///
@@ -730,7 +731,7 @@ impl<T> AntichainRef<'_, T> {
         self.iter().any(|x| x.less_than(time))
     }
 
-    /// Returns true if any item in the `AntichainRef` is less than or equal to the argument.
+    /// Returns `true` if any item in the `AntichainRef` is less than or equal to the argument.
     #[inline]
     ///
     /// # Examples

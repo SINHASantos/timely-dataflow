@@ -1,5 +1,6 @@
 //! Progress tracking mechanisms to support notification in timely dataflow
 
+use serde::{Deserialize, Serialize};
 pub use self::operate::Operate;
 pub use self::subgraph::{Subgraph, SubgraphBuilder};
 pub use self::timestamp::{Timestamp, PathSummary};
@@ -19,7 +20,7 @@ pub mod subgraph;
 pub struct Location {
     /// A scope-local operator identifier.
     pub node: usize,
-    /// An operator port identifier.`
+    /// An operator port identifier.
     pub port: Port,
 }
 

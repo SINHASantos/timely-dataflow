@@ -10,6 +10,7 @@ pub type TimelyLogger = Logger<TimelyEvent>;
 pub type TimelyProgressLogger = Logger<TimelyProgressEvent>;
 
 use std::time::Duration;
+use serde::{Deserialize, Serialize};
 use crate::dataflow::operators::capture::{Event, EventPusher};
 
 /// Logs events as a timely stream, with progress statements.
@@ -81,7 +82,7 @@ pub trait ProgressEventTimestamp: std::fmt::Debug + std::any::Any {
     /// # Example
     /// ```rust
     /// let ts = vec![(0usize, 0usize, (23u64, 10u64), -4i64), (0usize, 0usize, (23u64, 11u64), 1i64)];
-    /// let ts: &timely::logging::ProgressEventTimestampVec = &ts;
+    /// let ts: &dyn timely::logging::ProgressEventTimestampVec = &ts;
     /// for (n, p, t, d) in ts.iter() {
     ///     print!("{:?}, ", (n, p, t.as_any().downcast_ref::<(u64, u64)>(), d));
     /// }
@@ -181,7 +182,7 @@ pub enum StartStop {
 #[derive(Serialize, Deserialize, Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 /// Operator start or stop.
 pub struct ScheduleEvent {
-    /// Worker-unique identifier for the operator, linkable to the identifiers in `OperatesEvent`.
+    /// Worker-unique identifier for the operator, linkable to the identifiers in [`OperatesEvent`].
     pub id: usize,
     /// `Start` if the operator is starting, `Stop` if it is stopping.
     /// activity is true if it looks like some useful work was performed during this call (data was
@@ -199,7 +200,7 @@ impl ScheduleEvent {
 #[derive(Serialize, Deserialize, Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 /// Operator shutdown.
 pub struct ShutdownEvent {
-    /// Worker-unique identifier for the operator, linkable to the identifiers in `OperatesEvent`.
+    /// Worker-unique identifier for the operator, linkable to the identifiers in [`OperatesEvent`].
     pub id: usize,
 }
 
@@ -208,21 +209,21 @@ pub struct ShutdownEvent {
 pub struct ApplicationEvent {
     /// Unique event type identifier
     pub id: usize,
-    /// True when activity begins, false when it stops
+    /// `true` when activity begins, `false` when it stops
     pub is_start: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 /// Application-defined code start or stop
 pub struct GuardedMessageEvent {
-    /// True when activity begins, false when it stops
+    /// `true` when activity begins, `false` when it stops
     pub is_start: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 /// Application-defined code start or stop
 pub struct GuardedProgressEvent {
-    /// True when activity begins, false when it stops
+    /// `true` when activity begins, `false` when it stops
     pub is_start: bool,
 }
 

@@ -1,5 +1,6 @@
 //! A collection of updates of the form `(T, i64)`.
 
+use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
 
 /// A collection of updates of the form `(T, i64)`.
@@ -55,7 +56,7 @@ impl<T, const X: usize> ChangeBatch<T, X> {
         }
     }
 
-    /// Returns true if the change batch is not guaranteed compact.
+    /// Returns `true` if the change batch is not guaranteed compact.
     pub fn is_dirty(&self) -> bool {
         self.updates.len() > self.clean
     }
@@ -183,7 +184,7 @@ where
     /// Drains the set of updates.
     ///
     /// This operation first compacts the set of updates so that the drained results
-    /// have at most one occurence of each item.
+    /// have at most one occurrence of each item.
     ///
     /// # Examples
     ///
@@ -205,7 +206,7 @@ where
         self.updates.drain(..)
     }
 
-    /// True iff all keys have value zero.
+    /// Returns `true` iff all keys have value zero.
     ///
     /// This method requires mutable access to `self` because it may need to compact the representation
     /// to determine if the batch of updates is indeed empty. We could also implement a weaker form of
