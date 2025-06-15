@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.21.1](https://github.com/SINHASantos/timely-dataflow/compare/timely-v0.21.0...timely-v0.21.1) - 2025-06-15
+
+### Other
+
+- Derive Copy
+
 ## [0.21.0](https://github.com/TimelyDataflow/timely-dataflow/compare/timely-v0.20.0...timely-v0.21.0) - 2025-05-09
 
 ### Other
