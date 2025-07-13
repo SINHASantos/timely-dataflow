@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.21.5](https://github.com/SINHASantos/timely-dataflow/compare/timely-v0.21.4...timely-v0.21.5) - 2025-07-13
+
+### Other
+
+- Upgrade to columnar 0.9
+
 ## [0.21.4](https://github.com/TimelyDataflow/timely-dataflow/compare/timely-v0.21.3...timely-v0.21.4) - 2025-07-06
 
 ### Other
