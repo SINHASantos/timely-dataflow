@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.27.0](https://github.com/SINHASantos/timely-dataflow/compare/timely-v0.26.1...timely-v0.27.0) - 2026-02-22
+
+### Other
+
+- Replace seeded rand datagen with hash functions ([#745](https://github.com/SINHASantos/timely-dataflow/pull/745))
+- `Tee` implementation without `Clone` requirement ([#744](https://github.com/SINHASantos/timely-dataflow/pull/744))
+- Bump oldest Rust version from 1.79 to 1.85 ([#743](https://github.com/SINHASantos/timely-dataflow/pull/743))
+- Delay/retain input capabilities for specific outputs ([#738](https://github.com/SINHASantos/timely-dataflow/pull/738))
+
 ## [0.26.0](https://github.com/TimelyDataflow/timely-dataflow/compare/timely-v0.25.1...timely-v0.26.0) - 2026-02-03
 
 ### Other
