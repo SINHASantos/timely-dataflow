@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6e091a1a.js";
+            window.path_to_searchindex_js = "searchindex-b8d502d2.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-369bdbb9.js"></script>
@@ -807,7 +807,7 @@ fn main() {
         });
     }).unwrap();
 }</code></pre>
-<p>Alternately, the <code>flat_map</code> method takes input data and allows your closure to transform each element to an iterator, which it then enumerates into the output stream. The following fragment takes each number from zero through eight and has each produce all numbers less than it. The result should be 8 zeros, 7 ones, and so on up to 1 seven.</p>
+<p>Alternately, the <code>flat_map</code> method takes input data and allows your closure to transform each element to an iterator, which it then enumerates into the output stream. The following fragment takes each number from zero through nine and has each produce all numbers less than it. The result should be 9 zeros, 8 ones, and so on up to 1 eight.</p>
 <pre class="playground"><code class="language-rust">extern crate timely;
 
 use timely::dataflow::operators::{ToStream, Inspect, vec::Map};
@@ -1920,7 +1920,7 @@ fn main() {
 <p>One nice aspect of <code>capture_into</code> is that it really does reveal everything that an operator sees about a stream. If you got your hands on the resulting sequence of events, you would be able to review the full history of the stream. In principle, this could be a fine place to persist the data, capturing both data and progress information.</p>
 <h2 id="replaying-streams"><a class="header" href="#replaying-streams">Replaying Streams</a></h2>
 <p>At <em>its</em> core, <code>replay_into</code> takes some sequence of <code>Event&lt;T, D&gt;</code> items and reproduces the stream, as it was recorded. It is also fairly simple, and we can just look at its implementation as well:</p>
-<pre><code class="language-rust ignore">    fn replay_into&lt;S: Scope&lt;Timestamp=T&gt;&gt;(self, scope: &amp;mut S) -&gt; Stream&lt;S, C&gt;{
+<pre><code class="language-rust ignore">    fn replay_into&lt;T: Timestamp&gt;(self, scope: &amp;mut Scope&lt;T&gt;) -&gt; Stream&lt;T, C&gt;{
 
         let mut builder = OperatorBuilder::new("Replay".to_owned(), scope.clone());
         let (targets, stream) = builder.new_output();
@@ -2187,7 +2187,7 @@ struct TreeNode&lt;D&gt; {
 <pre class="playground"><code class="language-rust no_run">extern crate timely_bytes;
 extern crate timely_communication;
 
-use timely_communication::{Allocate, Bytesable};
+use timely_communication::Bytesable;
 
 /// A wrapper that indicates the serialization/deserialization strategy.
 pub struct Message {
